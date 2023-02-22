@@ -1,14 +1,19 @@
 <template>
   <ul class="postList">
-    <li class="post" v-for="post in posts">
-      <h2 class="post__title">{{ post.title }}</h2>
-      <p class="post__description">{{ post.description }}</p>
-    </li>
+    <post
+      v-for="post in posts"
+      :post="post"
+    />
   </ul>
 </template>
 
 <script>
+  import Post from './Post';
+
   export default {
+    components: {
+      Post,
+    },
     props: {
       posts: {
         type: Array,
@@ -26,17 +31,5 @@
     display: flex;
     justify-content: space-between;
     column-gap: 30px;
-  }
-
-  .post {
-    border: solid 2px green;
-    box-sizing: border-box;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    max-width: 350px;
-    width: 100%;
   }
 </style>
