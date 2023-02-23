@@ -1,6 +1,6 @@
 <template>
   <ul class="postList">
-    <post
+    <post-item
       v-for="post in posts"
       :post="post"
     />
@@ -8,11 +8,11 @@
 </template>
 
 <script>
-  import Post from './Post';
+  import PostItem from './PostItem';
 
   export default {
     components: {
-      Post,
+      PostItem,
     },
     props: {
       posts: {
