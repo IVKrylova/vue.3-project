@@ -7,6 +7,7 @@
     />
     <post-list
       :posts="posts"
+      @remove="removePost"
     />
   </main>
   <footer></footer>
@@ -33,6 +34,9 @@
     methods: {
       createPost(post) {
         this.posts.push(post);
+      },
+      removePost(post) {
+        this.posts = this.posts.filter(el => el.id !== post.id);
       }
     },
   }
