@@ -2,6 +2,7 @@
   <li class="post">
     <h2 class="post__title">{{ post.title }}</h2>
     <p class="post__description">{{ post.description }}</p>
+    <my-button>Удалить</my-button>
   </li>
 </template>
 
