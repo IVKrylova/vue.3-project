@@ -1,5 +1,5 @@
 <template>
-  <ul class="postList">
+  <ul class="postList" v-show="posts.length > 0">
     <post-item
       v-for="post in posts"
       :post="post"
@@ -7,6 +7,9 @@
       @remove="$emit('remove', post)"
     />
   </ul>
+  <p v-show="posts.length === 0">
+    Список постов пуст
+  </p>
 </template>
 
 <script>
