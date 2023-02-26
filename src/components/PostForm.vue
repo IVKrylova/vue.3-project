@@ -7,7 +7,7 @@
       placeholder="Название"
     />
     <my-input
-      v-model="post.description"
+      v-model="post.body"
       type="text"
       placeholder="Описание"
     />
@@ -21,7 +21,7 @@
       return {
         post: {
           title: '',
-          description: '',
+          body: '',
         }
       }
     },
