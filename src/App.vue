@@ -2,14 +2,24 @@
   <header></header>
   <main class="page">
     <h1 class="h1">Блог</h1>
-    <my-button @click="showDialog">Создать пост</my-button>
+    <ul class="button-list">
+      <li>
+        <my-button @click="showDialog">Создать пост</my-button>
+      </li>
+      <li>
+        <my-select
+          v-model="selectedSort"
+          :options="sortOptions"
+        />
+      </li>
+    </ul>
     <my-dialog v-model:show="dialogVisible">
       <post-form
         @create="createPost"
       />
     </my-dialog>
     <post-list
-      :posts="posts"
+      :posts="sortedPosts"
       @remove="removePost"
       v-if="!isPostLoading"
     />
@@ -33,6 +43,11 @@
         posts: [],
         dialogVisible: false,
         isPostLoading: false,
+        selectedSort: '',
+        sortOptions: [
+          { value: 'title', name: 'По названию'},
+          { value: 'body', name: 'По описанию'},
+        ],
       }
     },
     methods: {
@@ -61,6 +76,11 @@
     mounted() {
       this.fetchPosts();
     },
+    computed: {
+      sortedPosts() {
+        return [...this.posts].sort((post1, post2) => post1[this.selectedSort]?.localeCompare(post2[this.selectedSort]));
+      }
+    }
   }
 </script>
 
@@ -76,5 +96,13 @@
     text-align: center;
     margin: 20px;
     padding: 0;
+  }
+
+  .button-list {
+    margin: 20px;
+    padding: 0;
+    list-style-type: none;
+    display: flex;
+    column-gap: 15px;
   }
 </style>
