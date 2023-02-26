@@ -49,13 +49,12 @@
       async fetchPosts() {
         try {
           this.isPostLoading = true;
-          setTimeout(async () => {
-            const res = await axios.get('https://jsonplaceholder.typicode.com/posts?_limit=10');
-            this.posts = res.data;
-            this.isPostLoading = false;
-          }, 1000);
+          const res = await axios.get('https://jsonplaceholder.typicode.com/posts?_limit=10');
+          this.posts = res.data;
         } catch(err) {
           console.log(err);
+        } finally {
+          this.isPostLoading = false;
         }
       },
     },
