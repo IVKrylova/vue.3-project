@@ -2,9 +2,12 @@
   <header></header>
   <main class="page">
     <h1 class="h1">Блог</h1>
-    <post-form
-      @create="createPost"
-    />
+    <my-button @click="showDialog">Создать пост</my-button>
+    <my-dialog v-model:show="dialogVisible">
+      <post-form
+        @create="createPost"
+      />
+    </my-dialog>
     <post-list
       :posts="posts"
       @remove="removePost"
@@ -29,15 +32,20 @@
           { id: 2, title: 'React.js', description: 'React.js - это JavaScript-библиотека с открытым исходным кодом для разработки пользовательских интерфейсов' },
           { id: 3, title: 'Vue.js', description: 'Vue.js — это прогрессивный фреймворк для разработки пользовательских интерфейсов и одностраничных веб-приложений на языке JavaScript' },
         ],
+        dialogVisible: false,
       }
     },
     methods: {
       createPost(post) {
         this.posts.push(post);
+        this.dialogVisible = false;
       },
       removePost(post) {
         this.posts = this.posts.filter(el => el.id !== post.id);
-      }
+      },
+      showDialog() {
+        this.dialogVisible = true;
+      },
     },
   }
 </script>

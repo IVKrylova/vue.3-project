@@ -18,5 +18,6 @@
     padding: 10px;
     cursor: pointer;
     color: green;
+    max-width: 250px;
   }
 </style>
