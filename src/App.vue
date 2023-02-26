@@ -11,7 +11,9 @@
     <post-list
       :posts="posts"
       @remove="removePost"
+      v-if="!isPostLoading"
     />
+    <p v-else>Идет загрузка...</p>
   </main>
   <footer></footer>
 </template>
@@ -19,6 +21,7 @@
 <script>
   import PostList from './components/PostList';
   import PostForm from './components/PostForm';
+  import axios from 'axios';
 
   export default {
     components: {
@@ -27,12 +30,9 @@
     },
     data() {
       return {
-        posts: [
-          { id: 1, title: 'JavaScript', description: 'JavaScript - это язык, который позволяет вам применять сложные вещи на web странице — каждый раз, когда на web странице происходит что-то большее, чем просто её статичное отображение' },
-          { id: 2, title: 'React.js', description: 'React.js - это JavaScript-библиотека с открытым исходным кодом для разработки пользовательских интерфейсов' },
-          { id: 3, title: 'Vue.js', description: 'Vue.js — это прогрессивный фреймворк для разработки пользовательских интерфейсов и одностраничных веб-приложений на языке JavaScript' },
-        ],
+        posts: [],
         dialogVisible: false,
+        isPostLoading: false,
       }
     },
     methods: {
@@ -46,6 +46,21 @@
       showDialog() {
         this.dialogVisible = true;
       },
+      async fetchPosts() {
+        try {
+          this.isPostLoading = true;
+          setTimeout(async () => {
+            const res = await axios.get('https://jsonplaceholder.typicode.com/posts?_limit=10');
+            this.posts = res.data;
+            this.isPostLoading = false;
+          }, 1000);
+        } catch(err) {
+          console.log(err);
+        }
+      },
+    },
+    mounted() {
+      this.fetchPosts();
     },
   }
 </script>

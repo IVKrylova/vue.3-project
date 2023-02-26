@@ -34,7 +34,7 @@
     margin: 20px;
     list-style-type: none;
     display: flex;
-    justify-content: space-between;
-    column-gap: 30px;
+    flex-direction: column;
+    row-gap: 30px;
   }
 </style>
