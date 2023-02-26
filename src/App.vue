@@ -2,6 +2,10 @@
   <header></header>
   <main class="page">
     <h1 class="h1">Блог</h1>
+    <my-input
+      v-model="searchQuery"
+      placeholder="Поиск..."
+    />
     <ul class="button-list">
       <li>
         <my-button @click="showDialog">Создать пост</my-button>
@@ -19,7 +23,7 @@
       />
     </my-dialog>
     <post-list
-      :posts="sortedPosts"
+      :posts="searchSortedPosts"
       @remove="removePost"
       v-if="!isPostLoading"
     />
@@ -44,6 +48,7 @@
         dialogVisible: false,
         isPostLoading: false,
         selectedSort: '',
+        searchQuery: '',
         sortOptions: [
           { value: 'title', name: 'По названию'},
           { value: 'body', name: 'По описанию'},
@@ -79,7 +84,10 @@
     computed: {
       sortedPosts() {
         return [...this.posts].sort((post1, post2) => post1[this.selectedSort]?.localeCompare(post2[this.selectedSort]));
-      }
+      },
+      searchSortedPosts() {
+        return this.sortedPosts.filter(post => post.title.toLowerCase().includes(this.searchQuery.toLowerCase()));
+      },
     }
   }
 </script>
@@ -103,6 +111,6 @@
     padding: 0;
     list-style-type: none;
     display: flex;
-    column-gap: 15px;
+    justify-content: space-between;
   }
 </style>
