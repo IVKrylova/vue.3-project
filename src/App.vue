@@ -28,11 +28,7 @@
       v-if="!isPostLoading"
     />
     <p v-else>Идет загрузка...</p>
-    <page-list
-      :totalPages="totalPages"
-      :page="page"
-      @changePage="changePage"
-    />
+    <div ref="observer"></div>
   </main>
   <footer></footer>
 </template>
@@ -40,14 +36,12 @@
 <script>
   import PostList from './components/PostList';
   import PostForm from './components/PostForm';
-  import PageList from './components/PageList';
   import axios from 'axios';
 
   export default {
     components: {
       PostList,
       PostForm,
-      PageList,
     },
     data() {
       return {
@@ -93,12 +87,36 @@
           this.isPostLoading = false;
         }
       },
-      changePage(pageNumber) {
-        this.page = pageNumber;
+      async loadMorePosts() {
+        try {
+          this.page += 1;
+          const res = await axios.get('https://jsonplaceholder.typicode.com/posts', {
+            params: {
+              _page: this.page,
+              _limit: this.limit,
+            }
+          });
+          this.totalPages = Math.ceil(res.headers['x-total-count'] / this.limit);
+          this.posts = [...this.posts, ...res.data];
+        } catch(err) {
+          console.log(err);
+        }
       },
     },
     mounted() {
       this.fetchPosts();
+
+      const options = {
+        rootMargin: '0px',
+        threshold: 1.0
+      }
+      const callback = (entries, observer) => {
+        if(entries[0].isIntersecting && this.page <= this.totalPages) {
+          this.loadMorePosts();
+        }
+      }
+      const observer = new IntersectionObserver(callback, options);
+      observer.observe(this.$refs.observer)
     },
     computed: {
       sortedPosts() {
@@ -108,11 +126,6 @@
         return this.sortedPosts.filter(post => post.title.toLowerCase().includes(this.searchQuery.toLowerCase()));
       },
     },
-    watch: {
-      page() {
-        this.fetchPosts();
-      },
-    }
   }
 </script>
 
