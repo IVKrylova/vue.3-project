@@ -2,7 +2,8 @@
   <main class="page">
     <h1 class="h1">Блог</h1>
     <my-input
-      v-model="searchQuery"
+      :model-value="searchQuery"
+      @update:model-value="setSearchQuery"
       placeholder="Поиск..."
       v-focus
     />
@@ -15,7 +16,8 @@
       </li>
       <li>
         <my-select
-          v-model="selectedSort"
+          :model-value="selectedSort"
+          @update:model-value="setSelectedSort"
           :options="sortOptions"
         />
       </li>
@@ -38,7 +40,7 @@
 <script>
   import PostList from '../components/PostList';
   import PostForm from '../components/PostForm';
-  import axios from 'axios';
+  import { mapState, mapGetters, mapActions, mapMutations } from 'vuex';
 
   export default {
     components: {
@@ -47,21 +49,19 @@
     },
     data() {
       return {
-        posts: [],
         dialogVisible: false,
-        isPostLoading: false,
-        selectedSort: '',
-        searchQuery: '',
-        totalPages: 0,
-        page: 1,
-        limit: 10,
-        sortOptions: [
-          { value: 'title', name: 'По названию'},
-          { value: 'body', name: 'По описанию'},
-        ],
       }
     },
     methods: {
+      ...mapActions({
+        fetchPosts: 'post/fetchPosts',
+        loadMorePosts: 'post/loadMorePosts',
+      }),
+      ...mapMutations({
+        setPage: 'post/setPage',
+        setSearchQuery: 'post/setSearchQuery',
+        setSelectedSort: 'post/setSelectedSort',
+      }),
       createPost(post) {
         this.posts.push(post);
         this.dialogVisible = false;
@@ -72,50 +72,26 @@
       showDialog() {
         this.dialogVisible = true;
       },
-      async fetchPosts() {
-        try {
-          this.isPostLoading = true;
-          const res = await axios.get('https://jsonplaceholder.typicode.com/posts', {
-            params: {
-              _page: this.page,
-              _limit: this.limit,
-            }
-          });
-          this.totalPages = Math.ceil(res.headers['x-total-count'] / this.limit);
-          this.posts = res.data;
-        } catch(err) {
-          console.log(err);
-        } finally {
-          this.isPostLoading = false;
-        }
-      },
-      async loadMorePosts() {
-        try {
-          this.page += 1;
-          const res = await axios.get('https://jsonplaceholder.typicode.com/posts', {
-            params: {
-              _page: this.page,
-              _limit: this.limit,
-            }
-          });
-          this.totalPages = Math.ceil(res.headers['x-total-count'] / this.limit);
-          this.posts = [...this.posts, ...res.data];
-        } catch(err) {
-          console.log(err);
-        }
-      },
     },
     mounted() {
       this.fetchPosts();
     },
     computed: {
-      sortedPosts() {
-        return [...this.posts].sort((post1, post2) => post1[this.selectedSort]?.localeCompare(post2[this.selectedSort]));
-      },
-      searchSortedPosts() {
-        return this.sortedPosts.filter(post => post.title.toLowerCase().includes(this.searchQuery.toLowerCase()));
-      },
-    },
+      ...mapState({
+        posts: state => state.post.posts,
+        isPostLoading: state => state.post.isPostLoading,
+        selectedSort: state => state.post.selectedSort,
+        searchQuery: state => state.post.searchQuery,
+        totalPages: state => state.post.totalPages,
+        page: state => state.post.page,
+        limit: state => state.post.limit,
+        sortOptions: state => state.post.sortOptions,
+      }),
+      ...mapGetters({
+        sortedPosts: 'post/sortedPosts',
+        searchSortedPosts: 'post/searchSortedPosts',
+      }),
+    }
   }
 </script>
 
