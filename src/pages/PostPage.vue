@@ -4,6 +4,7 @@
     <my-input
       v-model="searchQuery"
       placeholder="Поиск..."
+      v-focus
     />
     <ul class="button-list">
       <li>
