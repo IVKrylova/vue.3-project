@@ -3,7 +3,14 @@
     <p>{{ post.id }}</p>
     <h2 class="post__title">{{ post.title }}</h2>
     <p class="post__description">{{ post.body }}</p>
-    <my-button @click="$emit('remove', post)">Удалить</my-button>
+    <ul>
+      <li>
+        <my-button @click="$router.push(`/posts/${post.id}`)">Открыть</my-button>
+      </li>
+      <li>
+        <my-button @click="$emit('remove', post)">Удалить</my-button>
+      </li>
+    </ul>
   </li>
 </template>
 
