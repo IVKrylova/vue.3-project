@@ -3,11 +3,16 @@ import App from './App';
 import 'normalize.css';
 import components from './components/UI';
 import router from './router/router';
+import directives from './directives/index';
 
 const app = createApp(App);
 
 components.forEach(component => {
   app.component(component.name, component);
+});
+
+directives.forEach(directive => {
+  app.directive(directive.name, directive);
 });
 
 app
