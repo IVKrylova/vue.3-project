@@ -1,5 +1,6 @@
 <template>
   <li class="post">
+    <p>{{ post.id }}</p>
     <h2 class="post__title">{{ post.title }}</h2>
     <p class="post__description">{{ post.body }}</p>
     <my-button @click="$emit('remove', post)">Удалить</my-button>

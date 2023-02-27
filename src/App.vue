@@ -28,6 +28,11 @@
       v-if="!isPostLoading"
     />
     <p v-else>Идет загрузка...</p>
+    <page-list
+      :totalPages="totalPages"
+      :page="page"
+      @changePage="changePage"
+    />
   </main>
   <footer></footer>
 </template>
@@ -35,12 +40,14 @@
 <script>
   import PostList from './components/PostList';
   import PostForm from './components/PostForm';
+  import PageList from './components/PageList';
   import axios from 'axios';
 
   export default {
     components: {
       PostList,
       PostForm,
+      PageList,
     },
     data() {
       return {
@@ -49,6 +56,9 @@
         isPostLoading: false,
         selectedSort: '',
         searchQuery: '',
+        totalPages: 0,
+        page: 1,
+        limit: 10,
         sortOptions: [
           { value: 'title', name: 'По названию'},
           { value: 'body', name: 'По описанию'},
@@ -69,13 +79,22 @@
       async fetchPosts() {
         try {
           this.isPostLoading = true;
-          const res = await axios.get('https://jsonplaceholder.typicode.com/posts?_limit=10');
+          const res = await axios.get('https://jsonplaceholder.typicode.com/posts', {
+            params: {
+              _page: this.page,
+              _limit: this.limit,
+            }
+          });
+          this.totalPages = Math.ceil(res.headers['x-total-count'] / this.limit);
           this.posts = res.data;
         } catch(err) {
           console.log(err);
         } finally {
           this.isPostLoading = false;
         }
+      },
+      changePage(pageNumber) {
+        this.page = pageNumber;
       },
     },
     mounted() {
@@ -87,6 +106,11 @@
       },
       searchSortedPosts() {
         return this.sortedPosts.filter(post => post.title.toLowerCase().includes(this.searchQuery.toLowerCase()));
+      },
+    },
+    watch: {
+      page() {
+        this.fetchPosts();
       },
     }
   }
