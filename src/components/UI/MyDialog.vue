@@ -30,7 +30,8 @@
     margin: auto;
     background-color: #fff;
     border-radius: 12px;
-    max-width: 400px;
+    max-width: 600px;
     width: 100%;
+    background-color: #92A9C9;
   }
 </style>
