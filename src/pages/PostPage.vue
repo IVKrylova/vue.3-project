@@ -95,6 +95,10 @@
 </script>
 
 <style>
+  .content {
+    color: #F9CFB6;
+  }
+
   .h1 {
     text-align: center;
     margin: 20px;
