@@ -57,6 +57,7 @@
         fetchPosts: 'post/fetchPosts',
         loadMorePosts: 'post/loadMorePosts',
         removePost: 'post/removePost',
+        createNewPost: 'post/createNewPost',
       }),
       ...mapMutations({
         setPage: 'post/setPage',
@@ -64,12 +65,9 @@
         setSelectedSort: 'post/setSelectedSort',
       }),
       createPost(post) {
-        this.posts.push(post);
+        this.createNewPost(post);
         this.dialogVisible = false;
       },
-      /* removePost(post) {
-        this.posts = this.posts.filter(el => el.id !== post.id);
-      }, */
       showDialog() {
         this.dialogVisible = true;
       },
