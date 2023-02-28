@@ -56,6 +56,7 @@
       ...mapActions({
         fetchPosts: 'post/fetchPosts',
         loadMorePosts: 'post/loadMorePosts',
+        removePost: 'post/removePost',
       }),
       ...mapMutations({
         setPage: 'post/setPage',
@@ -66,9 +67,9 @@
         this.posts.push(post);
         this.dialogVisible = false;
       },
-      removePost(post) {
+      /* removePost(post) {
         this.posts = this.posts.filter(el => el.id !== post.id);
-      },
+      }, */
       showDialog() {
         this.dialogVisible = true;
       },

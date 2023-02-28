@@ -43,7 +43,7 @@ export default {
     },
   },
   actions: {
-    async fetchPosts({state, commit}) {
+    async fetchPosts({ state, commit }) {
       try {
         commit('setIsPostLoading', true);
         const res = await axios.get('https://jsonplaceholder.typicode.com/posts', {
@@ -60,7 +60,7 @@ export default {
         commit('setIsPostLoading', false);
       }
     },
-    async loadMorePosts({state, commit}) {
+    async loadMorePosts({ state, commit }) {
       try {
         state.page += 1;
         const res = await axios.get('https://jsonplaceholder.typicode.com/posts', {
@@ -74,6 +74,9 @@ export default {
       } catch(err) {
         console.log(err);
       }
+    },
+    removePost({ state, commit }, post) {
+      commit('setPosts', state.posts.filter(el => el.id !== post.id));
     },
   },
   namespaced: true,
