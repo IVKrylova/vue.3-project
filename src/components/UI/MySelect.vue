@@ -35,5 +35,8 @@
   .select {
     max-width: 250px;
     width: 100%;
+    background-color: transparent;
+    color: #F9CFB6;
+    padding: 20px;
   }
 </style>

@@ -22,10 +22,15 @@
 
 <style>
   .input {
-    max-width: 300px;
-    width: 100%;
+    width: 500px;
     box-sizing: border-box;
     border: none;
-    border-bottom: 1px solid green;
+    border-bottom: 1px solid #F9CFB6;
+    background-color: transparent;
+    padding: 20px;
+  }
+
+  .input::placeholder {
+    color: #F9CFB6;
   }
 </style>

@@ -1,15 +1,18 @@
 <template>
   <main class="content">
-    <h1 class="h1">Блог</h1>
-    <my-input
-      :model-value="searchQuery"
-      @update:model-value="setSearchQuery"
-      placeholder="Поиск..."
-      v-focus
-    />
-    <ul class="button-list">
+    <h1 class="h1">Список постов</h1>
+    <ul class="action-list">
       <li>
         <my-button @click="showDialog">Создать пост</my-button>
+      </li>
+      <li>
+        <my-input
+          :model-value="searchQuery"
+          @update:model-value="setSearchQuery"
+          placeholder="Поиск..."
+          v-focus
+          class="input_shearch"
+        />
       </li>
       <li>
         <my-select
@@ -99,11 +102,11 @@
     padding: 0;
   }
 
-  .button-list {
-    margin: 20px;
+  .action-list {
     padding: 0;
     list-style-type: none;
     display: flex;
     justify-content: space-between;
+    align-items: center;
   }
 </style>
