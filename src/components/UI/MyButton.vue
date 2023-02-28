@@ -13,11 +13,16 @@
 <style>
   .button {
     box-sizing: border-box;
-    border: 1px solid green;
+    border: 1px solid #F9CFB6;
     background-color: transparent;
-    padding: 10px;
+    padding: 20px;
     cursor: pointer;
-    color: green;
-    max-width: 250px;
+    color: #F9CFB6;
+    width: 250px;
+  }
+
+  .button:hover {
+    color: #F49569;
+    border: 1px solid #F49569;
   }
 </style>

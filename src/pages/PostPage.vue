@@ -1,5 +1,5 @@
 <template>
-  <main class="page">
+  <main class="content">
     <h1 class="h1">Блог</h1>
     <my-input
       :model-value="searchQuery"
@@ -8,9 +8,6 @@
       v-focus
     />
     <ul class="button-list">
-      <li>
-        <my-button @click="$router.push('/')">На главную</my-button>
-      </li>
       <li>
         <my-button @click="showDialog">Создать пост</my-button>
       </li>
@@ -96,13 +93,6 @@
 </script>
 
 <style>
-  .page {
-    display: grid;
-    grid-template-columns: 1fr;
-    justify-content: center;
-    font-family: Arial, Helvetica, sans-serif;
-  }
-
   .h1 {
     text-align: center;
     margin: 20px;
