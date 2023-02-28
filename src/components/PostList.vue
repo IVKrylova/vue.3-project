@@ -33,7 +33,7 @@
 <style>
   .post-list {
     padding: 0;
-    margin: 20px;
+    margin-top: 50px;
     list-style-type: none;
     display: flex;
     flex-direction: column;
