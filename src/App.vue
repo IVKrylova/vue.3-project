@@ -2,7 +2,7 @@
   <div class="page">
     <my-header />
     <router-view></router-view>
-    <footer></footer>
+    <my-footer />
   </div>
 </template>
 
@@ -18,7 +18,6 @@
     font-family: Arial, Helvetica, sans-serif;
     background-color: #606582;
     min-height: 100vh;
-    padding: 0 20px;
-    text-align: center;
+    padding: 0 30px;
   }
 </style>
