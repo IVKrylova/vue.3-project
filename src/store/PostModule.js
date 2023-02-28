@@ -78,6 +78,9 @@ export default {
     removePost({ state, commit }, post) {
       commit('setPosts', state.posts.filter(el => el.id !== post.id));
     },
+    createNewPost({ state, commit }, post) {
+      commit('setPosts', [...state.posts, post]);
+    },
   },
   namespaced: true,
 }
